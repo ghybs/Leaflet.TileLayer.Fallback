@@ -55,7 +55,36 @@ myTileLayer.addTo(map);
 
 | Factory | Description |
 | :------ | :---------- |
-| **L.tileLayer.fallback**( `<ILayer>` parentGroup?, `<ILayer[]>` layersArray? ) | Creates a sub-group with events, optionally given a parent group and an initial array of child layers. |
+| **L.tileLayer.fallback**( `<String>` urlTemplate, `<TileLayer options>` options? ) | Instantiates a tile layer object given a [URL template](http://leafletjs.com/reference.html#url-template) and optionally an options object. When tile images return a 404 error, they are replaced by a scaled up tile from lower zoom. |
+
+
+### Options
+
+| Option | Type | Default | Description |
+| :----- | :--- | :------ | :---------- |
+| **minNativeZoom** | `Number` | 0 | Minimum zoom number the tiles source has available. If tiles are missing down to that zoom level (included), they will be replaced by the standard Error Tile (specified by `errorTileUrl`). |
+
+
+### Events
+
+| Event | Data | Description |
+| :---- | :--- | :---------- |
+| **tilefallback** | `TileFallbackEvent` | Fired when a tile is being replaced by a scaled up tile of lower zoom. |
+
+#### TileFallbackEvent
+
+| Property | Type | Description |
+| :------- | :--- | :---------- |
+| `tile` | `HTMLElement` | The tile element (image). |
+| `url` | `String` | The **original** source URL of the tile (before any fallback is applied). |
+| `urlMissing` | `String` | The missing source URL of the tile (possibly after a few fallback attempts). |
+| `urlFallback` | `String` | The fallback source URL of the tile (which may turn out to be also missing). |
+
+
+### Methods
+
+Leaflet.TileLayer.Fallback does not provide any extra method beyond what
+[L.TileLayer](http://leafletjs.com/reference.html#tilelayer) already provides.
 
 
 

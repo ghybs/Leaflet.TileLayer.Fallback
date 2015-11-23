@@ -51,6 +51,7 @@
 		_loadTile: function (tile, tilePoint) {
 			TLproto._loadTile.call(this, tile, tilePoint);
 			tile._originalTilePoint = tilePoint;
+			tile._originalSrc = tile.src;
 		},
 
 		_tileOnError: function () {
@@ -101,10 +102,18 @@
 			this.style.marginLeft = (-left) + 'px';
 
 			// Crop (clip) image.
-			// clip-path browsers support is not wide enough. http://caniuse.com/#feat=css-clip-path
+			// `clip` is deprecated, but browsers support for `clip-path: inset()` is far behind.
+			// http://caniuse.com/#feat=css-clip-path
 			this.style.clip = 'rect(' + top + 'px ' + (left + tileSize) + 'px ' + (top + tileSize) + 'px ' + left + 'px)';
 
-			this.src = newUrl || layer.options.errorTileUrl || this.src;
+			layer.fire('tilefallback', {
+				tile: this,
+				url: this._originalSrc,
+				urlMissing: this.src,
+				urlFallback: newUrl
+			});
+
+			this.src = newUrl;
 		},
 
 		_resetTile: function (tile) {
