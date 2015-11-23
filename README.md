@@ -15,15 +15,24 @@ Current TileLayer.Fallback version: 0.1.0
 
 
 
+## Demo
+[TileLayer.Fallback demonstration page](http://ghybs.github.io/Leaflet.TileLayer.Fallback/examples/tileLayerFallback-demo.html)
+
+
+
 ## Usage instructions
 
+### Quick Guide
+
 HTML:
+
 ```html
 <!-- add TileLayer.Fallback script after Leaflet -->
 <script src="leaflet.tilelayer.fallback-src.js"></script>
 ```
 
 JavaScript:
+
 ```javascript
 var myTileLayer = L.tileLayer.fallback(url, options);
 ```
@@ -55,7 +64,7 @@ myTileLayer.addTo(map);
 
 | Factory | Description |
 | :------ | :---------- |
-| **L.tileLayer.fallback**( `<String>` urlTemplate, `<TileLayer options>` options? ) | Instantiates a tile layer object given a [URL template](http://leafletjs.com/reference.html#url-template) and optionally an options object. When tile images return a 404 error, they are replaced by a scaled up tile from lower zoom. |
+| **L.tileLayer.fallback**( `<String>` [urlTemplate](http://leafletjs.com/reference.html#url-template), [`<TileLayer options>`](#options) options? ) | Instantiates a tile layer object given a [URL template](http://leafletjs.com/reference.html#url-template) and optionally an options object. When tile images return a 404 error, they are replaced by a scaled up tile from lower zoom. |
 
 
 ### Options
@@ -64,12 +73,17 @@ myTileLayer.addTo(map);
 | :----- | :--- | :------ | :---------- |
 | **minNativeZoom** | `Number` | 0 | Minimum zoom number the tiles source has available. If tiles are missing down to that zoom level (included), they will be replaced by the standard Error Tile (specified by `errorTileUrl`). |
 
+All other [TileLayer options](http://leafletjs.com/reference.html#tilelayer-options) are applicable.
+
 
 ### Events
 
 | Event | Data | Description |
 | :---- | :--- | :---------- |
 | **tilefallback** | `TileFallbackEvent` | Fired when a tile is being replaced by a scaled up tile of lower zoom. |
+
+All other [TileLayer events](http://leafletjs.com/reference.html#tilelayer-loading) are applicable.
+
 
 #### TileFallbackEvent
 
@@ -83,8 +97,21 @@ myTileLayer.addTo(map);
 
 ### Methods
 
-Leaflet.TileLayer.Fallback does not provide any extra method beyond what
-[L.TileLayer](http://leafletjs.com/reference.html#tilelayer) already provides.
+Leaflet.TileLayer.Fallback does not provide any extra method beyond regular
+[TileLayer methods](http://leafletjs.com/reference.html#tilelayer-addto).
+
+
+
+## Limitations
+TileLayer.Fallback plugin tries to replace each missing tile by its immediate
+lower zoom equivalent, and if that one is also missing, it goes to lower zoom
+again; and so on until a tile image is returned by the server, or it reaches
+`minNativeZoom`.
+
+That means it has to wait for the server to return a 404 error before attempting
+to replace the tile by a lower zoom equivalent. If several zoom levels are
+missing, it has to wait as many times as the number of missing zooms. Therefore,
+the more missing zoom levels, the more time it takes to replace a tile.
 
 
 

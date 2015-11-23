@@ -85,12 +85,7 @@
 			tilePoint.y = Math.floor(tilePoint.y / 2);
 
 			// Generate new src path.
-			newUrl = L.Util.template(layer._url, L.extend({
-				s: layer._getSubdomain(tilePoint),
-				z: tilePoint.z,
-				x: tilePoint.x,
-				y: tilePoint.y
-			}, layer.options));
+			newUrl = layer.getTileUrl(tilePoint);
 
 			// Zoom replacement img.
 			this.style.width = this.style.height = (tileSize * scale) + 'px';

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet.TileLayer.Fallback demo page</title>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="../leaflet.tilelayer.fallback-src.js"></script>
+
+    <style>
+
+        #map {
+            width: 1200px;
+            height: 800px;
+            border: 1px solid #ccc;
+        }
+
+        code {
+            color: brown;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Leaflet.TileLayer.Fallback demo page</h1>
+
+<div id="map"></div>
+
+<p>Current Zoom Level: <span id="currentZoom"></span></p>
+
+<p>
+    Some areas of the map are prevented from download to show case the plugin behaviour.
+    The tiles URL is tampered with on purpose to emulate missing images
+    (404 error, you can see them in the console).
+</p>
+
+<textarea id="debug" cols="120" rows="15"></textarea>
+
+<script type="application/javascript">
+
+    var map = L.map('map', {center: [48.85, 2.35], zoom: 8});
+
+    var tilesFallback = L.tileLayer.fallback('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        minNativeZoom: 3,
+        minZoom: 3,
+        maxZoom: 18,
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    });
+
+    // Tamper with getTileUrl to prevent some areas from properly downloading.
+    tilesFallback._originalGetTileUrl = tilesFallback.getTileUrl;
+    var tamper = "_tampered";
+    tilesFallback.getTileUrl = function (tilePoint) {
+        var originalUrl = this._originalGetTileUrl(tilePoint);
+
+        switch (tilePoint.z) {
+            case 3:
+                if (inRange(tilePoint.x, 3, 5) && inRange(tilePoint.y, 2, 4)) {
+                    return originalUrl;
+                }
+                break;
+            case 4:
+                if (inRange(tilePoint.x, 7, 9) && inRange(tilePoint.y, 5, 7)) {
+                    return originalUrl;
+                }
+                break;
+            case 5:
+                if (inRange(tilePoint.x, 15, 17) && inRange(tilePoint.y, 10, 12)) {
+                    return originalUrl;
+                }
+                break;
+            case 6:
+                if (inRange(tilePoint.x, 30, 33) && inRange(tilePoint.y, 21, 23)) {
+                    return originalUrl;
+                }
+                break;
+            case 7:
+                if (inRange(tilePoint.x, 63, 65) && inRange(tilePoint.y, 43, 45)) {
+                    return originalUrl;
+                }
+                break;
+            case 8:
+                if (inRange(tilePoint.x, 128, 130) && inRange(tilePoint.y, 87, 89)) {
+                    return originalUrl;
+                }
+                break;
+            case 9:
+                if (inRange(tilePoint.x, 257, 260) && inRange(tilePoint.y, 175, 177)) {
+                    return originalUrl;
+                }
+                break;
+            case 10:
+                if (inRange(tilePoint.x, 516, 520) && inRange(tilePoint.y, 351, 353)) {
+                    return originalUrl;
+                }
+                break;
+            case 11:
+                if (inRange(tilePoint.x, 1036, 1038) && inRange(tilePoint.y, 704, 706)) {
+                    return originalUrl;
+                }
+                break;
+            case 12:
+                if (inRange(tilePoint.x, 2073, 2075) && inRange(tilePoint.y, 1408, 1410)) {
+                    return originalUrl;
+                }
+                break;
+            case 13:
+                if (inRange(tilePoint.x, 4148, 4150) && inRange(tilePoint.y, 2817, 2819)) {
+                    return originalUrl;
+                }
+                break;
+            case 14:
+                if (inRange(tilePoint.x, 8298, 8300) && inRange(tilePoint.y, 5636, 5638)) {
+                    return originalUrl;
+                }
+                break;
+            case 15:
+                if (inRange(tilePoint.x, 16597, 16599) && inRange(tilePoint.y, 11273, 11275)) {
+                    return originalUrl;
+                }
+                break;
+            case 16:
+                if (inRange(tilePoint.x, 33195, 33197) && inRange(tilePoint.y, 22547, 22549)) {
+                    return originalUrl;
+                }
+                break;
+            case 17:
+                if (inRange(tilePoint.x, 66391, 66393) && inRange(tilePoint.y, 45095, 45097)) {
+                    return originalUrl;
+                }
+                break;
+            case 18:
+                if (inRange(tilePoint.x, 132782, 132784) && inRange(tilePoint.y, 90191, 90193)) {
+                    return originalUrl;
+                }
+                break;
+        }
+        return originalUrl + tamper;
+    };
+
+    tilesFallback.addTo(map);
+
+    var currentZoom = document.getElementById("currentZoom"),
+        debug = document.getElementById("debug");
+
+    map.on("zoomend", showZoom);
+    showZoom();
+
+    tilesFallback.on("tilefallback", function (event) {
+        debug.innerHTML += "\nFallback src " + event.urlMissing + " to " + event.urlFallback;
+        debug.scrollTop = debug.scrollHeight;
+    });
+
+    tilesFallback.on("tileerror", function (event) {
+        debug.innerHTML += "\nError src " + event.url;
+        debug.scrollTop = debug.scrollHeight;
+    });
+
+    function inRange(test, min, max) {
+        return test >= min && test <= max;
+    }
+
+    function showZoom() {
+        currentZoom.innerHTML = map.getZoom();
+    }
+
+</script>
+
+</body>
+</html>
