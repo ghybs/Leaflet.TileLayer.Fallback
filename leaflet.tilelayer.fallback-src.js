@@ -44,27 +44,26 @@
 			minNativeZoom: 0
 		},
 
-		/**
-		 * Instantiates a FallbackTileLayer.
-		 */
 		initialize: function (urlTemplate, options) {
 			TLproto.initialize.call(this, urlTemplate, options);
 		},
 
 		_loadTile: function (tile, tilePoint) {
 			TLproto._loadTile.call(this, tile, tilePoint);
-			this._originalTilePoint = tilePoint;
+			tile._originalTilePoint = tilePoint;
 		},
 
 		_tileOnError: function () {
 			var layer = this._layer,
 				originalTilePoint = this._originalTilePoint,
-				tilePoint = this._tilePoint,
-				fallbackZoom = this._fallbackZoom = (this._fallbackZoom || this._originalTilePoint.z) - 1,
-				scale = (this._scale || 1) * 2,
-				newUrl;
+				tilePoint = this._tilePoint = this._tilePoint || L.extend({}, originalTilePoint),
+				fallbackZoom = this._fallbackZoom = (this._fallbackZoom || originalTilePoint.z) - 1,
+				scale = this._fallbackScale = (this._fallbackScale || 1) * 2,
+				tileSize = layer._getTileSize(),
+				newUrl, top, left;
 
-			if (fallbackZoom < this.options.minNativeZoom) {
+			// If no lower zoom tiles are available, fallback to errorTile.
+			if (fallbackZoom < layer.options.minNativeZoom) {
 				layer.fire('tileerror', {
 					tile: this,
 					url: this.src
@@ -76,56 +75,49 @@
 				}
 
 				layer._tileLoaded();
+				return;
 			}
 
-			// NEW FROM HERE.
-			var zxy = (/\/(\d+)\/(\d+)\/(\d+)\.(?:[a-zA-Z0-9])+/i).exec(this.src),
-			    tileSize = layer._getTileSize();
+			// Modify tilePoint for replacement img.
+			tilePoint.z = fallbackZoom;
+			tilePoint.x = Math.floor(tilePoint.x / 2);
+			tilePoint.y = Math.floor(tilePoint.y / 2);
 
-			if (zxy && zxy.length && zxy.length >= 4) {
-				// Keep original zxy coordinates.
-				this.origin = this.origin || {
-						z: zxy[1],
-						x: zxy[2],
-						y: zxy[3]
-					};
-				// Compute new zxy coordinates for replacement img.
-				zxy = {
-					z: zxy[1] - 1,
-					x: Math.floor(zxy[2] / 2),
-					y: Math.floor(zxy[3] / 2)
-				};
-				// Generate new src path.
-				if (zxy) {
-					newUrl = L.Util.template(layer._url, L.extend({
-						s: layer.options.subdomains[0],
-						z: zxy.z,
-						x: zxy.x,
-						y: zxy.y
-					}, layer.options));
-				}
+			// Generate new src path.
+			newUrl = L.Util.template(layer._url, L.extend({
+				s: layer._getSubdomain(tilePoint),
+				z: tilePoint.z,
+				x: tilePoint.x,
+				y: tilePoint.y
+			}, layer.options));
 
-				// Keep track of total scale, used for margins computation.
-				this.scale = (this.scale || 1) * 2;
-				// Zoom replacement img.
-				this.style.width =
-					this.style.height = (tileSize * this.scale) + 'px';
+			// Zoom replacement img.
+			this.style.width = this.style.height = (tileSize * scale) + 'px';
 
-				// Compute margins to adjust position.
-				this.style.marginLeft =
-					(((zxy.x * this.scale) - this.origin.x) * tileSize) + 'px';
-				this.style.marginTop =
-					(((zxy.y * this.scale) - this.origin.y) * tileSize) + 'px';
-			}
+			// Compute margins to adjust position.
+			top = (originalTilePoint.y - tilePoint.y * scale) * tileSize;
+			this.style.marginTop = (-top) + 'px';
+			left = (originalTilePoint.x - tilePoint.x * scale) * tileSize;
+			this.style.marginLeft = (-left) + 'px';
+
+			// Crop (clip) image.
+			// clip-path browsers support is not wide enough. http://caniuse.com/#feat=css-clip-path
+			this.style.clip = 'rect(' + top + 'px ' + (left + tileSize) + 'px ' + (top + tileSize) + 'px ' + left + 'px)';
 
 			this.src = newUrl || layer.options.errorTileUrl || this.src;
+		},
 
-			// NEW UP TO HERE.
+		_resetTile: function (tile) {
+			var tileSize = this._getTileSize() + 'px';
 
-			layer._tileLoaded();
+			delete tile._originalTilePoint;
+			delete tile._fallbackZoom;
+			delete tile._fallbackScale;
+			tile.style = {
+				width: tileSize,
+				height: tileSize
+			};
 		}
-
-
 
 	});
 
