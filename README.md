@@ -1,6 +1,6 @@
 # Leaflet.TileLayer.Fallback
 
-Replaces missing Tiles (404 error) by scaled lower zoom Tiles.
+Plugin for Leaflet. Replaces missing Tiles (404 error) by scaled lower zoom Tiles.
 
 [Leaflet](http://leafletjs.com/) is the leading open-source JavaScript library
 for mobile-friendly interactive maps.
@@ -42,7 +42,7 @@ Now missing tiles will be automatically replaced by scaled up tiles from lower z
 
 ### Installing the plugin
 
-Simply add the "leaflet.tileLayer.fallback-src.js" script file to your page after
+Simply add the "leaflet.tilelayer.fallback-src.js" script file to your page after
 Leaflet script (whether in the HTML head or body).
 
 
