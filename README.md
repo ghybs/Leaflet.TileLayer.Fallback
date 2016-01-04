@@ -24,14 +24,14 @@ Current TileLayer.Fallback version: 0.1.0
 
 ### Quick Guide
 
-HTML:
+**HTML:**
 
 ```html
 <!-- add TileLayer.Fallback script after Leaflet -->
 <script src="leaflet.tilelayer.fallback-src.js"></script>
 ```
 
-JavaScript:
+**JavaScript:**
 
 ```javascript
 var myTileLayer = L.tileLayer.fallback(url, options);
@@ -71,7 +71,7 @@ myTileLayer.addTo(map);
 
 | Option | Type | Default | Description |
 | :----- | :--- | :------ | :---------- |
-| **minNativeZoom** | `Number` | 0 | Minimum zoom number the tiles source has available. If tiles are missing down to that zoom level (included), they will be replaced by the standard Error Tile (specified by `errorTileUrl`). |
+| **minNativeZoom** | `Number` | 0 | Minimum zoom number the tiles source has available. If tiles are missing down to that zoom level (included), they will be replaced by the standard Error Tile (specified by [`errorTileUrl`](http://leafletjs.com/reference.html#tilelayer-errortileurl)). |
 
 All other [TileLayer options](http://leafletjs.com/reference.html#tilelayer-options) are applicable.
 
@@ -80,7 +80,7 @@ All other [TileLayer options](http://leafletjs.com/reference.html#tilelayer-opti
 
 | Event | Data | Description |
 | :---- | :--- | :---------- |
-| **tilefallback** | `TileFallbackEvent` | Fired when a tile is being replaced by a scaled up tile of lower zoom. |
+| **tilefallback** | [`TileFallbackEvent`](#tilefallbackevent) | Fired when a tile is being replaced by a scaled up tile of lower zoom. |
 
 All other [TileLayer events](http://leafletjs.com/reference.html#tilelayer-loading) are applicable.
 
@@ -106,7 +106,7 @@ Leaflet.TileLayer.Fallback does not provide any extra method beyond regular
 TileLayer.Fallback plugin tries to replace each missing tile by its immediate
 lower zoom equivalent, and if that one is also missing, it goes to lower zoom
 again; and so on until a tile image is returned by the server, or it reaches
-`minNativeZoom`.
+[`minNativeZoom`](#options).
 
 That means it has to wait for the server to return a 404 error before attempting
 to replace the tile by a lower zoom equivalent. If several zoom levels are
