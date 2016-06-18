@@ -129,7 +129,7 @@
 
 	// Supply with a factory for consistency with Leaflet.
 	L.tileLayer.fallback = function (urlTemplate, options) {
-		return new TL.Fallback(urlTemplate, options);
+		return new FallbackTileLayer(urlTemplate, options);
 	};
 
 	// Just return a value to define the module export.
