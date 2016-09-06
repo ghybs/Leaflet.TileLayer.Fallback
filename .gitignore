@@ -1,1 +1,3 @@
-# Nothing to ignore for now.
+node_modules
+#dist # Track /dist folder in gh-pages branch so that they are available in demo page and can be used in tags
+npm-debug.log
