@@ -1,0 +1,34 @@
+{
+  "name": "leaflet.tilelayer.fallback",
+  "version": "0.1.1",
+  "description": "Replaces missing Tiles (404 error) by scaled lower zoom Tiles",
+  "main": "dist/leaflet.tilelayer.fallback.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "build": "jake build",
+    "prepublish": "jake"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ghybs/Leaflet.TileLayer.Fallback.git"
+  },
+  "keywords": [
+    "leaflet",
+    "tiles",
+    "404",
+    "error",
+    "fallback"
+  ],
+  "author": "Boris Seang",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ghybs/Leaflet.TileLayer.Fallback/issues"
+  },
+  "homepage": "https://github.com/ghybs/Leaflet.TileLayer.Fallback",
+  "devDependencies": {
+    "magic-string": "^0.16.0",
+    "uglify-js": "^2.7.3"
+  }
+}
