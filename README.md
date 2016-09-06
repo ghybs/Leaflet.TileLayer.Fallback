@@ -5,14 +5,14 @@ Plugin for Leaflet. Replaces missing Tiles (404 error) by scaled lower zoom Tile
 [Leaflet](http://leafletjs.com/) is the leading open-source JavaScript library
 for mobile-friendly interactive maps.
 
-Current TileLayer.Fallback version: 0.1.1 (for Leaflet 0.7)
+Current TileLayer.Fallback version: 1.0.0 (for Leaflet 1.x)
 
 
 
 ## Requirements
 
-- Leaflet stable (0.7.x)
-- For Leaflet 1.0, use the [`master` branch](https://github.com/ghybs/Leaflet.TileLayer.Fallback/)
+- Leaflet 1.x
+- For Leaflet 0.7, use the [`leaflet-0.7` branch](https://github.com/ghybs/Leaflet.TileLayer.Fallback/tree/leaflet-0.7)
 
 
 
@@ -53,7 +53,7 @@ You can alternatively use the free [RawGit](https://rawgit.com/) CDN service, bu
 
 ```html
 <!-- After Leaflet script -->
-<script src="https://cdn.rawgit.com/ghybs/Leaflet.TileLayer.Fallback/v0.1.1/dist/leaflet.tilelayer.fallback.js"></script>
+<script src="https://cdn.rawgit.com/ghybs/Leaflet.TileLayer.Fallback/v1.0.0/dist/leaflet.tilelayer.fallback.js"></script>
 ```
 
 
