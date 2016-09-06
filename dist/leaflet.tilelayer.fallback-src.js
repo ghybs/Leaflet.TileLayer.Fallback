@@ -1,5 +1,5 @@
 /**
- * Leaflet.TileLayer.Fallback 0.1.1 (c908bda)
+ * Leaflet.TileLayer.Fallback 1.0.0 (d6563d5)
  * Replaces missing Tiles (404 error) by scaled lower zoom Tiles.
  *
  * Copyright 2015-2016 Boris Seang
@@ -42,79 +42,82 @@ var FallbackTileLayer = TL.extend({
 		TLproto.initialize.call(this, urlTemplate, options);
 	},
 
-	_loadTile: function (tile, tilePoint) {
-		TLproto._loadTile.call(this, tile, tilePoint);
-		tile._originalTilePoint = tilePoint;
+	createTile: function (coords, done) {
+		var tile = TLproto.createTile.call(this, coords, done);
+		tile._originalCoords = coords;
 		tile._originalSrc = tile.src;
+
+		return tile;
 	},
 
-	_tileOnError: function () {
-		var layer = this._layer,
-		    originalTilePoint = this._originalTilePoint,
-		    tilePoint = this._tilePoint = this._tilePoint || L.extend({}, originalTilePoint),
-		    fallbackZoom = this._fallbackZoom = (this._fallbackZoom || originalTilePoint.z) - 1,
-		    scale = this._fallbackScale = (this._fallbackScale || 1) * 2,
-		    tileSize = layer._getTileSize(),
-		    newUrl, top, left;
+	_tileOnError: function (done, tile, e) {
+		var layer = this, // `this` is bound to the Tile Layer in TLproto.createTile.
+			originalCoords = tile._originalCoords,
+			currentCoords = tile._currentCoords = tile._currentCoords || layer._wrapCoords(originalCoords),
+			fallbackZoom = tile._fallbackZoom = (tile._fallbackZoom || originalCoords.z) - 1,
+			scale = tile._fallbackScale = (tile._fallbackScale || 1) * 2,
+			tileSize = layer.getTileSize(),
+			style = tile.style,
+			newUrl, top, left;
 
 		// If no lower zoom tiles are available, fallback to errorTile.
 		if (fallbackZoom < layer.options.minNativeZoom) {
-			layer.fire('tileerror', {
-				tile: this,
-				url: this.src
-			});
-
-			newUrl = layer.options.errorTileUrl;
-			if (newUrl) {
-				this.src = newUrl;
-			}
-
-			layer._tileLoaded();
+			done(e, tile);
 			return;
 		}
 
 		// Modify tilePoint for replacement img.
-		tilePoint.z = fallbackZoom;
-		tilePoint.x = Math.floor(tilePoint.x / 2);
-		tilePoint.y = Math.floor(tilePoint.y / 2);
+		currentCoords.z = fallbackZoom;
+		currentCoords.x = Math.floor(currentCoords.x / 2);
+		currentCoords.y = Math.floor(currentCoords.y / 2);
 
 		// Generate new src path.
-		newUrl = layer.getTileUrl(tilePoint);
+		newUrl = layer.getTileUrl(currentCoords);
 
 		// Zoom replacement img.
-		this.style.width = this.style.height = (tileSize * scale) + 'px';
+		style.width = (tileSize.x * scale) + 'px';
+		style.height = (tileSize.y * scale) + 'px';
 
 		// Compute margins to adjust position.
-		top = (originalTilePoint.y - tilePoint.y * scale) * tileSize;
-		this.style.marginTop = (-top) + 'px';
-		left = (originalTilePoint.x - tilePoint.x * scale) * tileSize;
-		this.style.marginLeft = (-left) + 'px';
+		top = (originalCoords.y - currentCoords.y * scale) * tileSize.y;
+		style.marginTop = (-top) + 'px';
+		left = (originalCoords.x - currentCoords.x * scale) * tileSize.x;
+		style.marginLeft = (-left) + 'px';
 
 		// Crop (clip) image.
 		// `clip` is deprecated, but browsers support for `clip-path: inset()` is far behind.
 		// http://caniuse.com/#feat=css-clip-path
-		this.style.clip = 'rect(' + top + 'px ' + (left + tileSize) + 'px ' + (top + tileSize) + 'px ' + left + 'px)';
+		style.clip = 'rect(' + top + 'px ' + (left + tileSize.x) + 'px ' + (top + tileSize.y) + 'px ' + left + 'px)';
 
 		layer.fire('tilefallback', {
-			tile: this,
-			url: this._originalSrc,
-			urlMissing: this.src,
+			tile: tile,
+			url: tile._originalSrc,
+			urlMissing: tile.src,
 			urlFallback: newUrl
 		});
 
-		this.src = newUrl;
+		tile.src = newUrl;
 	},
 
-	_resetTile: function (tile) {
-		var tileSize = this._getTileSize() + 'px';
+	getTileUrl: function (coords) {
+		var z = coords.z = coords.z || this._getZoomForUrl();
 
-		delete tile._originalTilePoint;
-		delete tile._fallbackZoom;
-		delete tile._fallbackScale;
-		tile.style = {
-			width: tileSize,
-			height: tileSize
+		var data = {
+			r: L.Browser.retina ? '@2x' : '',
+			s: this._getSubdomain(coords),
+			x: coords.x,
+			y: coords.y,
+			z: z
 		};
+		if (this._map && !this._map.options.crs.infinite) {
+			var invertedY = this._globalTileRange.max.y - coords.y;
+			if (this.options.tms) {
+				data['y'] = invertedY;
+			}
+			data['-y'] = invertedY;
+		}
+
+		return L.Util.template(this._url, L.extend(data, this.options));
 	}
 
 });
