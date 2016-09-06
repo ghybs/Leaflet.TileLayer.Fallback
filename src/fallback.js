@@ -88,18 +88,6 @@ var FallbackTileLayer = TL.extend({
 		}
 
 		return L.Util.template(this._url, L.extend(data, this.options));
-	},
-
-	_resetTile: function (tile) {
-		var tileSize = this._getTileSize() + 'px';
-
-		delete tile._originalTilePoint;
-		delete tile._fallbackZoom;
-		delete tile._fallbackScale;
-		tile.style = {
-			width: tileSize,
-			height: tileSize
-		};
 	}
 
 });
