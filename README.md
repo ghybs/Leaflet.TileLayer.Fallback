@@ -5,14 +5,14 @@ Plugin for Leaflet. Replaces missing Tiles (404 error) by scaled lower zoom Tile
 [Leaflet](http://leafletjs.com/) is the leading open-source JavaScript library
 for mobile-friendly interactive maps.
 
-Current TileLayer.Fallback version: 1.0.0 (for Leaflet 1.x)
+Latest TileLayer.Fallback release (for Leaflet 1.x): [`v1.0.0`](https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/tag/v1.0.0)
 
 
 
 ## Requirements
 
 - Leaflet 1.x
-- For Leaflet 0.7, use the [`leaflet-0.7` branch](https://github.com/ghybs/Leaflet.TileLayer.Fallback/tree/leaflet-0.7)
+- For Leaflet 0.7, use the [`v0.1.1` release](https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/tag/v0.1.1) or the [`leaflet-0.7` branch](https://github.com/ghybs/Leaflet.TileLayer.Fallback/tree/leaflet-0.7)
 
 
 
@@ -44,7 +44,7 @@ Now missing tiles will be automatically replaced by scaled up tiles from lower z
 ### Installing the plugin
 
 #### Local copy
-1. Download the `leaflet.tilelayer.fallback.js` file.
+1. Download the "<a href="https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/download/v1.0.0/leaflet.tilelayer.fallback.js" download="leaflet.tilelayer.fallback.js">`leaflet.tilelayer.fallback.js`</a>" file from [`v1.0.0` release](https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/tag/v1.0.0).
 2. Place the file alongside your page.
 3. Add the `script` tag (see [Quick Guide > HTML](#quick-guide)) to your page after Leaflet script.
 
@@ -53,7 +53,7 @@ You can alternatively use the free [RawGit](https://rawgit.com/) CDN service, bu
 
 ```html
 <!-- After Leaflet script -->
-<script src="https://cdn.rawgit.com/ghybs/Leaflet.TileLayer.Fallback/v1.0.0/dist/leaflet.tilelayer.fallback.js"></script>
+<script src="https://cdn.rawgit.com/ghybs/Leaflet.TileLayer.Fallback/v1.0.0-gh/dist/leaflet.tilelayer.fallback.js"></script>
 ```
 
 
