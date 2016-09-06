@@ -5,18 +5,19 @@ Plugin for Leaflet. Replaces missing Tiles (404 error) by scaled lower zoom Tile
 [Leaflet](http://leafletjs.com/) is the leading open-source JavaScript library
 for mobile-friendly interactive maps.
 
-Current TileLayer.Fallback version: 0.1.0
+Current TileLayer.Fallback version: 0.1.1 (for Leaflet 0.7)
 
 
 
 ## Requirements
 
 - Leaflet stable (0.7.x)
+- For Leaflet 1.0, use the [`master` branch](https://github.com/ghybs/Leaflet.TileLayer.Fallback/)
 
 
 
 ## Demo
-[TileLayer.Fallback demonstration page](http://ghybs.github.io/Leaflet.TileLayer.Fallback/examples/tileLayerFallback-demo.html)
+[TileLayer.Fallback demonstration page](https://ghybs.github.io/Leaflet.TileLayer.Fallback/examples/tileLayerFallback-demo.html)
 
 
 
@@ -24,14 +25,14 @@ Current TileLayer.Fallback version: 0.1.0
 
 ### Quick Guide
 
-HTML:
+**HTML:**
 
 ```html
 <!-- add TileLayer.Fallback script after Leaflet -->
-<script src="leaflet.tilelayer.fallback-src.js"></script>
+<script src="leaflet.tilelayer.fallback.js"></script>
 ```
 
-JavaScript:
+**JavaScript:**
 
 ```javascript
 var myTileLayer = L.tileLayer.fallback(url, options);
@@ -42,8 +43,19 @@ Now missing tiles will be automatically replaced by scaled up tiles from lower z
 
 ### Installing the plugin
 
-Simply add the "leaflet.tilelayer.fallback-src.js" script file to your page after
-Leaflet script (whether in the HTML head or body).
+#### Local copy
+1. Download the `leaflet.tilelayer.fallback.js` file.
+2. Place the file alongside your page.
+3. Add the `script` tag (see [Quick Guide > HTML](#quick-guide)) to your page after Leaflet script.
+
+#### CDN
+You can alternatively use the free [RawGit](https://rawgit.com/) CDN service, but keep in mind that there are [no uptime or support guarantees](https://rawgit.com/faq#no-uptime-guarantee).
+
+```html
+<!-- After Leaflet script -->
+<script src="https://cdn.rawgit.com/ghybs/Leaflet.TileLayer.Fallback/v0.1.1/dist/leaflet.tilelayer.fallback.js"></script>
+```
+
 
 
 ### Creation
@@ -71,7 +83,7 @@ myTileLayer.addTo(map);
 
 | Option | Type | Default | Description |
 | :----- | :--- | :------ | :---------- |
-| **minNativeZoom** | `Number` | 0 | Minimum zoom number the tiles source has available. If tiles are missing down to that zoom level (included), they will be replaced by the standard Error Tile (specified by `errorTileUrl`). |
+| **minNativeZoom** | `Number` | 0 | Minimum zoom number the tiles source has available. If tiles are missing down to that zoom level (included), they will be replaced by the standard Error Tile (specified by [`errorTileUrl`](http://leafletjs.com/reference.html#tilelayer-errortileurl)). |
 
 All other [TileLayer options](http://leafletjs.com/reference.html#tilelayer-options) are applicable.
 
@@ -80,7 +92,7 @@ All other [TileLayer options](http://leafletjs.com/reference.html#tilelayer-opti
 
 | Event | Data | Description |
 | :---- | :--- | :---------- |
-| **tilefallback** | `TileFallbackEvent` | Fired when a tile is being replaced by a scaled up tile of lower zoom. |
+| **tilefallback** | [`TileFallbackEvent`](#tilefallbackevent) | Fired when a tile is being replaced by a scaled up tile of lower zoom. |
 
 All other [TileLayer events](http://leafletjs.com/reference.html#tilelayer-loading) are applicable.
 
@@ -97,8 +109,7 @@ All other [TileLayer events](http://leafletjs.com/reference.html#tilelayer-loadi
 
 ### Methods
 
-Leaflet.TileLayer.Fallback does not provide any extra method beyond regular
-[TileLayer methods](http://leafletjs.com/reference.html#tilelayer-addto).
+All regular [TileLayer methods](http://leafletjs.com/reference.html#tilelayer-addto) are applicable.
 
 
 
@@ -106,7 +117,7 @@ Leaflet.TileLayer.Fallback does not provide any extra method beyond regular
 TileLayer.Fallback plugin tries to replace each missing tile by its immediate
 lower zoom equivalent, and if that one is also missing, it goes to lower zoom
 again; and so on until a tile image is returned by the server, or it reaches
-`minNativeZoom`.
+[`minNativeZoom`](#options).
 
 That means it has to wait for the server to return a 404 error before attempting
 to replace the tile by a lower zoom equivalent. If several zoom levels are
