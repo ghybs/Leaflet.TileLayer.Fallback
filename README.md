@@ -17,7 +17,7 @@ Current TileLayer.Fallback version: 0.1.1 (for Leaflet 0.7)
 
 
 ## Demo
-[TileLayer.Fallback demonstration page](http://ghybs.github.io/Leaflet.TileLayer.Fallback/examples/tileLayerFallback-demo.html)
+[TileLayer.Fallback demonstration page](https://ghybs.github.io/Leaflet.TileLayer.Fallback/examples/tileLayerFallback-demo.html)
 
 
 
