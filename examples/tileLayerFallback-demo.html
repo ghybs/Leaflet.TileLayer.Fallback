@@ -55,7 +55,7 @@
     // Tamper with getTileUrl to prevent some areas from properly downloading.
     tilesFallback._originalGetTileUrl = tilesFallback.getTileUrl;
     var tamper = "_tampered";
-    tilesFallback.getTileUrl2 = function (tilePoint) {
+    tilesFallback.getTileUrl = function (tilePoint) {
         var originalUrl = this._originalGetTileUrl(tilePoint);
 
         switch (tilePoint.z) {
@@ -136,6 +136,11 @@
                 break;
             case 18:
                 if (inRange(tilePoint.x, 132782, 132784) && inRange(tilePoint.y, 90191, 90193)) {
+                    return originalUrl;
+                }
+                break;
+            case 19:
+                if (inRange(tilePoint.x, 265565, 265567) && inRange(tilePoint.y, 180383, 180385)) {
                     return originalUrl;
                 }
                 break;
