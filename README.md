@@ -12,7 +12,7 @@ Latest TileLayer.Fallback release (for Leaflet 0.7): [`v0.1.1`](https://github.c
 ## Requirements
 
 - Leaflet stable (0.7.x)
-- For Leaflet 1.0, use the [`v1.0.0` release](https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/tag/v1.0.0) or the [`master` branch](https://github.com/ghybs/Leaflet.TileLayer.Fallback/)
+- For Leaflet 1.0, use the [`v1.0.1` release](https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/tag/v1.0.1) or the [`master` branch](https://github.com/ghybs/Leaflet.TileLayer.Fallback/)
 
 
 
