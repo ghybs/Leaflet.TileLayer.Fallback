@@ -5,7 +5,7 @@ Plugin for Leaflet. Replaces missing Tiles (404 error) by scaled lower zoom Tile
 [Leaflet](http://leafletjs.com/) is the leading open-source JavaScript library
 for mobile-friendly interactive maps.
 
-Latest TileLayer.Fallback release (for Leaflet 1.x): [`v1.0.0`](https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/tag/v1.0.0)
+Latest TileLayer.Fallback release (for Leaflet 1.x): [`v1.0.1`](https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/tag/v1.0.1)
 
 
 
