@@ -53,7 +53,7 @@ You can alternatively use the free [RawGit](https://rawgit.com/) CDN service, bu
 
 ```html
 <!-- After Leaflet script -->
-<script src="https://cdn.rawgit.com/ghybs/Leaflet.TileLayer.Fallback/v1.0.1-gh/dist/leaflet.tilelayer.fallback.js"></script>
+<script src="https://cdn.rawgit.com/ghybs/Leaflet.TileLayer.Fallback/v1.0.1-gh2/dist/leaflet.tilelayer.fallback.js"></script>
 ```
 
 
