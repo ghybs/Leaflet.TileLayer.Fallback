@@ -20,10 +20,18 @@ var FallbackTileLayer = TL.extend({
 		return tile;
 	},
 
+	_createCurrentCoords: function (originalCoords) {
+		var currentCoords = this._wrapCoords(originalCoords);
+
+		currentCoords.fallback = true;
+
+		return currentCoords;
+	},
+
 	_tileOnError: function (done, tile, e) {
 		var layer = this, // `this` is bound to the Tile Layer in TLproto.createTile.
 			originalCoords = tile._originalCoords,
-			currentCoords = tile._currentCoords = tile._currentCoords || layer._wrapCoords(originalCoords),
+			currentCoords = tile._currentCoords = tile._currentCoords || layer._createCurrentCoords(originalCoords),
 			fallbackZoom = tile._fallbackZoom = (tile._fallbackZoom || originalCoords.z) - 1,
 			scale = tile._fallbackScale = (tile._fallbackScale || 1) * 2,
 			tileSize = layer.getTileSize(),
@@ -70,7 +78,7 @@ var FallbackTileLayer = TL.extend({
 	},
 
 	getTileUrl: function (coords) {
-		var z = coords.z = coords.z || this._getZoomForUrl();
+		var z = coords.z = coords.fallback ? coords.z : this._getZoomForUrl();
 
 		var data = {
 			r: L.Browser.retina ? '@2x' : '',
