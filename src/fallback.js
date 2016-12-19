@@ -1,4 +1,4 @@
-var FallbackTileLayer = L.TileLayer.extend({
+L.TileLayer.Fallback = L.TileLayer.extend({
 
 	options: {
 		minNativeZoom: 0
@@ -101,5 +101,5 @@ var FallbackTileLayer = L.TileLayer.extend({
 
 // Supply with a factory for consistency with Leaflet.
 L.tileLayer.fallback = function (urlTemplate, options) {
-	return new FallbackTileLayer(urlTemplate, options);
+	return new L.TileLayer.Fallback(urlTemplate, options);
 };
