@@ -103,4 +103,3 @@ var FallbackTileLayer = L.TileLayer.extend({
 L.tileLayer.fallback = function (urlTemplate, options) {
 	return new FallbackTileLayer(urlTemplate, options);
 };
-
