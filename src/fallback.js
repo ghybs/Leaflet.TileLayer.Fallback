@@ -1,19 +1,15 @@
-var TL = L.TileLayer,
-    TLproto = TL.prototype;
-
-
-var FallbackTileLayer = TL.extend({
+var FallbackTileLayer = L.TileLayer.extend({
 
 	options: {
 		minNativeZoom: 0
 	},
 
 	initialize: function (urlTemplate, options) {
-		TLproto.initialize.call(this, urlTemplate, options);
+		L.TileLayer.prototype.initialize.call(this, urlTemplate, options);
 	},
 
 	createTile: function (coords, done) {
-		var tile = TLproto.createTile.call(this, coords, done);
+		var tile = L.TileLayer.prototype.createTile.call(this, coords, done);
 		tile._originalCoords = coords;
 		tile._originalSrc = tile.src;
 
@@ -29,7 +25,7 @@ var FallbackTileLayer = TL.extend({
 	},
 
 	_tileOnError: function (done, tile, e) {
-		var layer = this, // `this` is bound to the Tile Layer in TLproto.createTile.
+		var layer = this, // `this` is bound to the Tile Layer in L.TileLayer.prototype.createTile.
 			originalCoords = tile._originalCoords,
 			currentCoords = tile._currentCoords = tile._currentCoords || layer._createCurrentCoords(originalCoords),
 			fallbackZoom = tile._fallbackZoom = (tile._fallbackZoom || originalCoords.z) - 1,
