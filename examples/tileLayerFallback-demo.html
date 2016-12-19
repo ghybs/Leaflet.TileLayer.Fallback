@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Leaflet.TileLayer.Fallback demo page</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="../dist/leaflet.tilelayer.fallback-src.js"></script>
@@ -45,11 +45,12 @@
     var map = L.map('map', {center: [48.85, 2.35], zoom: 8});
 
     var tilesFallback = L.tileLayer.fallback('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        minNativeZoom: 3,
+        minNativeZoom: 4,
         maxNativeZoom: 19,
         minZoom: 3,
         maxZoom: 22,
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        errorTileUrl: 'no-tile.png'
     });
 
     // Tamper with getTileUrl to prevent some areas from properly downloading.
