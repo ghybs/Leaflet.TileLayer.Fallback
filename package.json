@@ -1,6 +1,8 @@
 {
   "name": "leaflet.tilelayer.fallback",
+  "_name": "Leaflet.TileLayer.Fallback",
   "version": "0.1.1",
+  "_year": "2015-2016",
   "description": "Replaces missing Tiles (404 error) by scaled lower zoom Tiles",
   "main": "dist/leaflet.tilelayer.fallback.js",
   "directories": {
@@ -28,6 +30,7 @@
   },
   "homepage": "https://github.com/ghybs/Leaflet.TileLayer.Fallback",
   "devDependencies": {
+    "git-rev": "^0.2.1",
     "magic-string": "^0.16.0",
     "uglify-js": "^2.7.3"
   }
