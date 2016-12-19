@@ -24,6 +24,8 @@ var FallbackTileLayer = L.TileLayer.extend({
 		return currentCoords;
 	},
 
+	_originalTileOnError: L.TileLayer.prototype._tileOnError,
+
 	_tileOnError: function (done, tile, e) {
 		var layer = this, // `this` is bound to the Tile Layer in L.TileLayer.prototype.createTile.
 			originalCoords = tile._originalCoords,
@@ -36,8 +38,7 @@ var FallbackTileLayer = L.TileLayer.extend({
 
 		// If no lower zoom tiles are available, fallback to errorTile.
 		if (fallbackZoom < layer.options.minNativeZoom) {
-			done(e, tile);
-			return;
+			return this._originalTileOnError(done, tile, e);
 		}
 
 		// Modify tilePoint for replacement img.
