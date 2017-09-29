@@ -85,7 +85,8 @@ myTileLayer.addTo(map);
 
 | Option | Type | Default | Description |
 | :----- | :--- | :------ | :---------- |
-| **minNativeZoom** | `Number` | 0 | Minimum zoom number the tiles source has available. If tiles are missing down to that zoom level (included), they will be replaced by the standard Error Tile (specified by [`errorTileUrl`](http://leafletjs.com/reference-1.0.2.html#tilelayer-errortileurl)). For zoom lower than `minNativeZoom`, [standard Tile Layer behaviour](http://leafletjs.com/reference-1.0.2.html#tilelayer-minnativezoom) applies, i.e. tiles are loaded from `minNativeZoom` and scaled down. |
+| **minNativeZoom** | `Number` | 0 | Minimum zoom number the tiles source has available. If tiles are missing down to that zoom level (included), they will be replaced by the fallbackURL (if provided) or the standard Error Tile (specified by [`errorTileUrl`](http://leafletjs.com/reference-1.0.2.html#tilelayer-errortileurl)). For zoom lower than `minNativeZoom`, [standard Tile Layer behaviour](http://leafletjs.com/reference-1.0.2.html#tilelayer-minnativezoom) applies, i.e. tiles are loaded from `minNativeZoom` and scaled down. |
+| **fallbackUrl** | `String` | '' | Fallback URL to request tiles if the first one failed on every possible zoom level. If tiles are also missing down to the minimum zoom level (included), they will be replaced by the standard Error Tile (specified by [`errorTileUrl`](http://leafletjs.com/reference-1.0.2.html#tilelayer-errortileurl)). For zoom lower than `minNativeZoom`, [standard Tile Layer behaviour](http://leafletjs.com/reference-1.0.2.html#tilelayer-minnativezoom) applies, i.e. tiles are loaded from `minNativeZoom` and scaled down. |
 
 All other [TileLayer options](http://leafletjs.com/reference-1.0.2.html#tilelayer-option) are applicable.
 
