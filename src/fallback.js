@@ -1,7 +1,8 @@
 L.TileLayer.Fallback = L.TileLayer.extend({
 
 	options: {
-		minNativeZoom: 0
+		minNativeZoom: 0,
+		fallbackUrl: ''
 	},
 
 	initialize: function (urlTemplate, options) {
@@ -30,15 +31,24 @@ L.TileLayer.Fallback = L.TileLayer.extend({
 		var layer = this, // `this` is bound to the Tile Layer in L.TileLayer.prototype.createTile.
 			originalCoords = tile._originalCoords,
 			currentCoords = tile._currentCoords = tile._currentCoords || layer._createCurrentCoords(originalCoords),
-			fallbackZoom = tile._fallbackZoom = (tile._fallbackZoom || originalCoords.z) - 1,
+			fallbackZoom = tile._fallbackZoom = (tile._fallbackZoom || currentCoords.z) - 1,
 			scale = tile._fallbackScale = (tile._fallbackScale || 1) * 2,
 			tileSize = layer.getTileSize(),
 			style = tile.style,
+			fallbackURL = layer.options.fallbackUrl,
 			newUrl, top, left;
-
-		// If no lower zoom tiles are available, fallback to errorTile.
+		
+		// If no lower zoom tiles are available, fallback.
 		if (fallbackZoom < layer.options.minNativeZoom) {
-			return this._originalTileOnError(done, tile, e);
+			// If a fallback URL is provided, try with the new URL.
+			if (fallbackURL && fallbackURL != layer._url) {
+				layer.changeProvider(tile, fallbackURL);
+				return this._tileOnError(done, tile, e);
+			}
+			// If both tile providers failed, fallback to original errorTile.
+			else {
+				return this._originalTileOnError(done, tile, e);
+			}
 		}
 
 		// Modify tilePoint for replacement img.
@@ -72,6 +82,10 @@ L.TileLayer.Fallback = L.TileLayer.extend({
 		});
 
 		tile.src = newUrl;
+	},
+
+	changeProvider: function (tile, url) {
+		this.setUrl(url);
 	},
 
 	getTileUrl: function (coords) {
