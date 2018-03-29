@@ -30,7 +30,7 @@ L.TileLayer.Fallback = L.TileLayer.extend({
 		var layer = this, // `this` is bound to the Tile Layer in L.TileLayer.prototype.createTile.
 			originalCoords = tile._originalCoords,
 			currentCoords = tile._currentCoords = tile._currentCoords || layer._createCurrentCoords(originalCoords),
-			fallbackZoom = tile._fallbackZoom = (tile._fallbackZoom || originalCoords.z) - 1,
+			fallbackZoom = tile._fallbackZoom = tile._fallbackZoom === undefined ? originalCoords.z - 1 : tile._fallbackZoom - 1,
 			scale = tile._fallbackScale = (tile._fallbackScale || 1) * 2,
 			tileSize = layer.getTileSize(),
 			style = tile.style,
