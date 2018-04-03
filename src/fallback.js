@@ -28,13 +28,13 @@ L.TileLayer.Fallback = L.TileLayer.extend({
 
 	_tileOnError: function (done, tile, e) {
 		var layer = this, // `this` is bound to the Tile Layer in L.TileLayer.prototype.createTile.
-			originalCoords = tile._originalCoords,
-			currentCoords = tile._currentCoords = tile._currentCoords || layer._createCurrentCoords(originalCoords),
-			fallbackZoom = tile._fallbackZoom = tile._fallbackZoom === undefined ? originalCoords.z - 1 : tile._fallbackZoom - 1,
-			scale = tile._fallbackScale = (tile._fallbackScale || 1) * 2,
-			tileSize = layer.getTileSize(),
-			style = tile.style,
-			newUrl, top, left;
+		    originalCoords = tile._originalCoords,
+		    currentCoords = tile._currentCoords = tile._currentCoords || layer._createCurrentCoords(originalCoords),
+		    fallbackZoom = tile._fallbackZoom = tile._fallbackZoom === undefined ? originalCoords.z - 1 : tile._fallbackZoom - 1,
+		    scale = tile._fallbackScale = (tile._fallbackScale || 1) * 2,
+		    tileSize = layer.getTileSize(),
+		    style = tile.style,
+		    newUrl, top, left;
 
 		// If no lower zoom tiles are available, fallback to errorTile.
 		if (fallbackZoom < layer.options.minNativeZoom) {
