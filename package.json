@@ -5,7 +5,10 @@
   "_year": "2015-2018",
   "description": "Replaces missing Tiles (404 error) by scaled lower zoom Tiles",
   "main": "dist/leaflet.tilelayer.fallback",
-  "files": ["dist/*.js"],
+  "files": [
+    "dist/*.js",
+    "dist/*.map"
+  ],
   "directories": {
     "example": "examples"
   },
