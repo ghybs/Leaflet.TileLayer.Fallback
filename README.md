@@ -47,7 +47,7 @@ Now missing tiles will be automatically replaced by scaled up tiles from lower z
 ### Installing the plugin
 
 #### Local copy
-1. Download the "<a href="https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/download/v1.0.3/leaflet.tilelayer.fallback.js">`leaflet.tilelayer.fallback.js`</a>" file from the [`v1.0.3` release](https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/tag/v1.0.3).
+1. Download the "<a href="https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/download/v1.0.4/leaflet.tilelayer.fallback.js">`leaflet.tilelayer.fallback.js`</a>" file from the [`v1.0.4` release](https://github.com/ghybs/Leaflet.TileLayer.Fallback/releases/tag/v1.0.4).
 2. Place the file alongside your page.
 3. Add the `script` tag (see [Quick Guide > HTML](#quick-guide)) to your page after Leaflet script.
 
@@ -56,7 +56,7 @@ You can alternatively use the free [unpkg](https://unpkg.com) CDN service, but k
 
 ```html
 <!-- After Leaflet script -->
-<script src="https://unpkg.com/leaflet.tilelayer.fallback@1.0.3/dist/leaflet.tilelayer.fallback.js"></script>
+<script src="https://unpkg.com/leaflet.tilelayer.fallback@1.0.4/dist/leaflet.tilelayer.fallback.js"></script>
 ```
 
 
