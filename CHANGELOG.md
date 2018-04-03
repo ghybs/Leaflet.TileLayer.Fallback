@@ -4,6 +4,8 @@
 ## 1.0.4 (2018-04-03) for Leaflet 1.x
 
 - Fix: explicitly check `_fallbackZoom` for `undefined` instead of falsy [#10](https://github.com/ghybs/Leaflet.TileLayer.Fallback/pull/10) (by [@alexthemark](https://github.com/alexthemark))
+- Fix: publish `*.map` source map files to npm registry as well
+- Fix: comply with source map file name convention
 - Docs: add this CHANGELOG
 
 
