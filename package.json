@@ -2,7 +2,7 @@
   "name": "leaflet.tilelayer.fallback",
   "_name": "Leaflet.TileLayer.Fallback",
   "version": "1.0.3",
-  "_year": "2015-2016",
+  "_year": "2015-2018",
   "description": "Replaces missing Tiles (404 error) by scaled lower zoom Tiles",
   "main": "dist/leaflet.tilelayer.fallback",
   "files": ["dist/*.js"],
