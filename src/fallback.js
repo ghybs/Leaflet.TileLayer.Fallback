@@ -85,7 +85,6 @@ L.TileLayer.Fallback = L.TileLayer.extend({
 			z: z
 		};
 		if (this._map && !this._map.options.crs.infinite) {
-			// these lines are new
 			var bounds = this._map.getPixelWorldBounds(z); // get bounds
 			if (bounds) {
 				var globalTileRange = this._pxBoundsToTileRange(bounds); // update tile range
