@@ -47,7 +47,10 @@ L.TileLayer.Fallback = L.TileLayer.extend({
 		currentCoords.y = Math.floor(currentCoords.y / 2);
 
 		// Generate new src path.
+		var originalZoom = layer._tileZoom;
+		layer._tileZoom = currentCoords.z;
 		newUrl = layer.getTileUrl(currentCoords);
+		layer._tileZoom = originalZoom;
 
 		// Zoom replacement img.
 		style.width = (tileSize.x * scale) + 'px';
@@ -72,27 +75,6 @@ L.TileLayer.Fallback = L.TileLayer.extend({
 		});
 
 		tile.src = newUrl;
-	},
-
-	getTileUrl: function (coords) {
-		var z = coords.z = coords.fallback ? coords.z : this._getZoomForUrl();
-
-		var data = {
-			r: L.Browser.retina ? '@2x' : '',
-			s: this._getSubdomain(coords),
-			x: coords.x,
-			y: coords.y,
-			z: z
-		};
-		if (this._map && !this._map.options.crs.infinite) {
-			var invertedY = this._globalTileRange.max.y - coords.y;
-			if (this.options.tms) {
-				data['y'] = invertedY;
-			}
-			data['-y'] = invertedY;
-		}
-
-		return L.Util.template(this._url, L.extend(data, this.options));
 	}
 
 });
